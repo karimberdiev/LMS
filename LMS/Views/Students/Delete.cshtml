@@ -1,20 +1,65 @@
 ﻿@model LMS.Models.Student
 @{
-    Layout = "_layout";
+    ViewData["Title"] = "Student o'chirish";
 }
-<h1>Delete Student</h1>
-<div class="alert alert-warning">
-    <p>Are you sure?</p>
-</div>
 
-<dl class="row">
-    <dt class="col-sm-3">Full Name</dt>
-    <dd class="col-sm-9">@Model.FullName</dd>
-    <dt class="col-sm-3">Age</dt>
-    <dd class="col-sm-9">@Model.Age</dd>
-</dl>
-<form asp-action="Deletee" method="post">
-    <input type="hidden" asp-for="Id"/>
-    <button type="submit" class="btn btn-danger">Yes, delete</button>
-    <a asp-action="Index" class="btn btn-secondary">No, go back</a>
-</form>
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Student o'chirish
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Diqqat!</strong> Ushbu studentni o'chirishni tasdiqlaysizmi?
+                </div>
+
+                <dl class="row">
+                    <dt class="col-sm-4">To'liq ism:</dt>
+                    <dd class="col-sm-8"><strong>@Model.FullName</strong></dd>
+
+                    <dt class="col-sm-4">Yosh:</dt>
+                    <dd class="col-sm-8">@Model.Age</dd>
+
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+                    }
+
+                    <dt class="col-sm-4">Holati:</dt>
+                    <dd class="col-sm-8">
+                        @switch (Model.Status)
+                        {
+                            case LMS.Models.StudentStatus.Active:
+                                <span class="badge bg-success">Faol</span>
+                                break;
+                            case LMS.Models.StudentStatus.Suspended:
+                                <span class="badge bg-warning">To'xtatilgan</span>
+                                break;
+                            case LMS.Models.StudentStatus.Graduated:
+                                <span class="badge bg-info">Bitirgan</span>
+                                break;
+                        }
+                    </dd>
+                </dl>
+
+                <form asp-action="Deletee" asp-route-id="@Model.Id" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Yo'q, bekor qilish
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i>Ha, o'chirish
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

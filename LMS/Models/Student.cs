@@ -33,8 +33,8 @@ namespace LMS.Models
         public Gender Gender { get; set; }
 
         [Display(Name ="Holati")]
-        public StudentStatus Statuss { get; set; } = StudentStatus.Active;
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public StudentStatus Status { get; set; } = StudentStatus.Active;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; }
         public string DisplayName => $"{FullName} ({Age} yosh)";
     }
