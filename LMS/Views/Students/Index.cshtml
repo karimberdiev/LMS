@@ -28,7 +28,7 @@
         <div class="card bg-success text-white">
             <div class="card-body">
                 <h5 class="card-title">Faol</h5>
-                <h2>@Model.Count(s => s.Statuss == LMS.Models.StudentStatus.Active)</h2>
+                <h2>@Model.Count(s => s.Status == LMS.Models.StudentStatus.Active)</h2>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="card bg-warning text-white">
             <div class="card-body">
                 <h5 class="card-title">To'xtatilgan</h5>
-                <h2>@Model.Count(s => s.Statuss == LMS.Models.StudentStatus.Suspended)</h2>
+                <h2>@Model.Count(s => s.Status == LMS.Models.StudentStatus.Suspended)</h2>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
         <div class="card bg-info text-white">
             <div class="card-body">
                 <h5 class="card-title">Bitirganlar</h5>
-                <h2>@Model.Count(s => s.Statuss == LMS.Models.StudentStatus.Graduated)</h2>
+                <h2>@Model.Count(s => s.Status == LMS.Models.StudentStatus.Graduated)</h2>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @switch (student.Statuss)
+                                    @switch (student.Status)
                                     {
                                         case LMS.Models.StudentStatus.Active:
                                             <span class="badge bg-success">Faol</span>
