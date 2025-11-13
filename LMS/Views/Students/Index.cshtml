@@ -1,0 +1,159 @@
+﻿@model List<LMS.Models.Student>
+@{
+    ViewData["Title"] = "Studentlar ro'yxati";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="bi bi-people-fill me-2"></i>Studentlar ro'yxati
+    </h2>
+    <div>
+        <a class="btn btn-primary" href="/students/create">
+            <i class="bi bi-plus-circle me-1"></i>Yangi student
+        </a>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Jami studentlar</h5>
+                <h2>@Model.Count</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Faol</h5>
+                <h2>@Model.Count(s => s.Statuss == LMS.Models.StudentStatus.Active)</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h5 class="card-title">To'xtatilgan</h5>
+                <h2>@Model.Count(s => s.Statuss == LMS.Models.StudentStatus.Suspended)</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Bitirganlar</h5>
+                <h2>@Model.Count(s => s.Statuss == LMS.Models.StudentStatus.Graduated)</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Students Table -->
+<div class="card">
+    <div class="card-header">
+        <i class="bi bi-table me-2"></i>Barcha studentlar
+    </div>
+    <div class="card-body">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>To'liq ism</th>
+                            <th>Yosh</th>
+                            <th>Email</th>
+                            <th>Telefon</th>
+                            <th>Jinsi</th>
+                            <th>Holati</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in Model)
+                        {
+                            <tr>
+                                <td>@student.Id</td>
+                                <td>
+                                    <strong>@student.FullName</strong>
+                                </td>
+                                <td>@student.Age</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(student.Email))
+                                    {
+                                        <a href="mailto:@student.Email">@student.Email</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(student.PhoneNumber))
+                                    {
+                                        <span>@student.PhoneNumber</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (student.Gender == LMS.Models.Gender.Male)
+                                    {
+                                        <span class="badge bg-primary">
+                                            <i class="bi bi-gender-male"></i> Erkak
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-gender-female"></i> Ayol
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @switch (student.Statuss)
+                                    {
+                                        case LMS.Models.StudentStatus.Active:
+                                            <span class="badge bg-success">Faol</span>
+                                            break;
+                                        case LMS.Models.StudentStatus.Suspended:
+                                            <span class="badge bg-warning">To'xtatilgan</span>
+                                            break;
+                                        case LMS.Models.StudentStatus.Graduated:
+                                            <span class="badge bg-info">Bitirgan</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a class="btn btn-outline-info" href="/students/@student.Id" title="Ko'rish">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a class="btn btn-outline-warning" href="/students/@student.Id/edit" title="Tahrirlash">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-outline-danger" href="/students/@student.Id/delete" title="O'chirish">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                Hozircha studentlar yo'q. Yangi student qo'shish uchun yuqoridagi tugmani bosing.
+            </div>
+        }
+    </div>
+</div>

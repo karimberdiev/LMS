@@ -1,0 +1,20 @@
+﻿@model LMS.Models.Student
+@{
+    Layout = "_layout";
+}
+<h1>Delete Student</h1>
+<div class="alert alert-warning">
+    <p>Are you sure?</p>
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Full Name</dt>
+    <dd class="col-sm-9">@Model.FullName</dd>
+    <dt class="col-sm-3">Age</dt>
+    <dd class="col-sm-9">@Model.Age</dd>
+</dl>
+<form asp-action="Deletee" method="post">
+    <input type="hidden" asp-for="Id"/>
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a asp-action="Index" class="btn btn-secondary">No, go back</a>
+</form>

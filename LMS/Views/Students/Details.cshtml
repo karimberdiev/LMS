@@ -1,0 +1,145 @@
+﻿@model LMS.Models.Student
+@{
+    ViewData["Title"] = "Student tafsilotlari";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-person-badge me-2"></i>Student tafsilotlari
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                                 style="width: 80px; height: 80px; font-size: 2rem;">
+                                @if (Model.Gender == LMS.Models.Gender.Male)
+                                {
+                                    <i class="bi bi-person"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-person-dress"></i>
+                                }
+                            </div>
+                            <div>
+                                <h3 class="mb-0">@Model.FullName</h3>
+                                <p class="text-muted mb-0">Student ID: #@Model.Id</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        <i class="bi bi-calendar me-2"></i>Yosh
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.Age yosh
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        <i class="bi bi-gender-ambiguous me-2"></i>Jinsi
+                    </dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Gender == LMS.Models.Gender.Male)
+                        {
+                            <span class="badge bg-primary">Erkak</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Ayol</span>
+                        }
+                    </dd>
+
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
+                        <dt class="col-sm-4">
+                            <i class="bi bi-envelope me-2"></i>Email
+                        </dt>
+                        <dd class="col-sm-8">
+                            <a href="mailto:@Model.Email">@Model.Email</a>
+                        </dd>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                    {
+                        <dt class="col-sm-4">
+                            <i class="bi bi-telephone me-2"></i>Telefon
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Model.PhoneNumber
+                        </dd>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Address))
+                    {
+                        <dt class="col-sm-4">
+                            <i class="bi bi-geo-alt me-2"></i>Manzil
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Model.Address
+                        </dd>
+                    }
+
+                    <dt class="col-sm-4">
+                        <i class="bi bi-info-circle me-2"></i>Holati
+                    </dt>
+                    <dd class="col-sm-8">
+                        @switch (Model.Statuss)
+                        {
+                            case LMS.Models.StudentStatus.Active:
+                                <span class="badge bg-success">Faol</span>
+                                break;
+                            case LMS.Models.StudentStatus.Suspended:
+                                <span class="badge bg-warning">To'xtatilgan</span>
+                                break;
+                            case LMS.Models.StudentStatus.Graduated:
+                                <span class="badge bg-info">Bitirgan</span>
+                                break;
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        <i class="bi bi-clock me-2"></i>Qo'shilgan sana
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")
+                    </dd>
+
+                    @if (Model.UpdatedAt!=null)
+                    {
+                        <dt class="col-sm-4">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Yangilangan sana
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Model.UpdatedAt.ToString("dd.MM.yyyy HH:mm")
+                        </dd>
+                    }
+                </dl>
+
+                <hr />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Orqaga
+                    </a>
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                            <i class="bi bi-pencil me-1"></i>Tahrirlash
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i>O'chirish
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

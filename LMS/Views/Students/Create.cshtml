@@ -1,0 +1,95 @@
+﻿@model LMS.Models.Student
+@{
+    ViewData["Title"] = "Yangi student qo'shish";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-person-plus me-2"></i>Yangi student qo'shish
+                </h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <div class="row">
+                        <!-- Full Name -->
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="FullName" class="form-label"></label>
+                            <input asp-for="FullName" class="form-control" placeholder="Masalan: Alisher Navoiy" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Age and Gender -->
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Age" class="form-label"></label>
+                            <input asp-for="Age" type="number" class="form-control" placeholder="18" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Gender" class="form-label"></label>
+                            <select asp-for="Gender" class="form-select" asp-items="Html.GetEnumSelectList<LMS.Models.Gender>()">
+                                <option value="">-- Tanlang --</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+
+                        <!-- Email and Phone -->
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input asp-for="Email" type="email" class="form-control" placeholder="student@example.com" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PhoneNumber" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-telephone"></i>
+                                </span>
+                                <input asp-for="PhoneNumber" type="tel" class="form-control" placeholder="+998 90 123 45 67" />
+                            </div>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Address" class="form-label"></label>
+                            <textarea asp-for="Address" class="form-control" rows="3" placeholder="Manzilni kiriting"></textarea>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Statuss" class="form-label"></label>
+                            <select asp-for="Statuss" class="form-select" asp-items="Html.GetEnumSelectList<LMS.Models.StudentStatus>()">
+                            </select>
+                            <span asp-validation-for="Statuss" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Orqaga
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-1"></i>Saqlash
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
